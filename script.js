@@ -1,4 +1,4 @@
-import { supabase } from "/admin/supabaseClient.js";
+import { supabase } from "./admin/supabaseClient.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -118,3 +118,4 @@ function updateCartCount() {
   const el = document.getElementById("cartCount");
   if (el) el.textContent = total;
 }
+
