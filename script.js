@@ -1,9 +1,17 @@
 import { supabase } from "./admin/supabaseClient.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+/* =========================
+   GLOBAL GSAP HELPER
+========================= */
+let fadeUp;
+
+/* =========================
+   DOM READY
+========================= */
+document.addEventListener("DOMContentLoaded", async () => {
 
   /* =========================
-     GSAP SAFE CHECK
+     GSAP SETUP (SAFE)
   ========================= */
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
@@ -13,24 +21,33 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.from(".hero-description", { opacity: 0, y: 20, delay: 0.4 });
     gsap.from(".hero-cta", { opacity: 0, y: 10, delay: 0.6 });
 
-    const fadeUp = (targets, trigger) => {
+    fadeUp = (targets, trigger) => {
+      if (!document.querySelector(targets)) return;
+
       gsap.from(targets, {
         opacity: 0,
         y: 30,
         duration: 1.2,
         stagger: 0.2,
-        scrollTrigger: { trigger, start: "top 80%" }
+        scrollTrigger: {
+          trigger,
+          start: "top 80%"
+        }
       });
     };
 
-    fadeUp(".product-card", "#featured");
     fadeUp(".knowledge-text, .knowledge-visual", "#knowledge");
   }
 
   /* =========================
-     LOAD FEATURED PRODUCTS
+     LOAD PRODUCTS THEN ANIMATE
   ========================= */
-  loadFeaturedProducts();
+  await loadFeaturedProducts();
+
+  if (fadeUp) {
+    fadeUp(".product-card", "#featured");
+  }
+
   updateCartCount();
 });
 
@@ -58,27 +75,29 @@ async function loadFeaturedProducts() {
     const card = document.createElement("article");
     card.className = "product-card";
 
-    const imagePath = product.image.startsWith("/")
-  ? `.${product.image}`
-  : product.image;
+    // 🔥 IMAGE PATH FIX (GitHub Pages safe)
+    const imagePath = product.image?.startsWith("/")
+      ? `.${product.image}`
+      : product.image;
 
-card.innerHTML = `
-  <img src="${imagePath}" alt="${product.name}">
-  <h3>${product.name}</h3>
-  <p>${product.energy || "Balance, shanti aur well-being ke liye sacred plant"}</p>
-  <button class="add-btn"
-    data-id="${product.id}"
-    data-name="${product.name}"
-    data-price="${product.price}"
-    data-image="${imagePath}">
-    Add to Sanctuary
-  </button>
-`;
+    card.innerHTML = `
+      <img src="${imagePath}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>${product.energy || "Balance, shanti aur well-being ke liye sacred plant"}</p>
+      <button class="add-btn"
+        data-id="${product.id}"
+        data-name="${product.name}"
+        data-price="${product.price}"
+        data-image="${imagePath}">
+        Add to Sanctuary
+      </button>
+    `;
 
+    // 🔗 Product page navigation (GitHub Pages safe)
     card.addEventListener("click", e => {
       if (!e.target.classList.contains("add-btn")) {
-       window.location.href =
-  `./products/product.html?slug=${product.slug}`;
+        window.location.href =
+          `./products/product.html?slug=${product.slug}`;
       }
     });
 
@@ -87,7 +106,7 @@ card.innerHTML = `
 }
 
 /* =========================
-   CART (GLOBAL, SAFE)
+   CART HANDLING
 ========================= */
 document.addEventListener("click", e => {
   if (!e.target.classList.contains("add-btn")) return;
@@ -98,6 +117,7 @@ document.addEventListener("click", e => {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   const existing = cart.find(p => p.id == btn.dataset.id);
+
   if (existing) {
     existing.qty += 1;
   } else {
@@ -111,17 +131,20 @@ document.addEventListener("click", e => {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
+
   btn.textContent = "Added ✓";
   btn.disabled = true;
+
   updateCartCount();
 });
 
+/* =========================
+   CART COUNT
+========================= */
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const total = cart.reduce((s, i) => s + i.qty, 0);
+  const total = cart.reduce((sum, item) => sum + item.qty, 0);
+
   const el = document.getElementById("cartCount");
   if (el) el.textContent = total;
 }
-
-
-
