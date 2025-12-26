@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Sanctuary Cart</title>
 
-  <!-- MAIN CSS (same file used everywhere) -->
+  <!-- MAIN CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,7 +13,7 @@
 
 <!-- ================= HEADER ================= -->
 <header class="site-header">
-  <a href="/index.html" class="logo">Secret Sanctuary</a>
+  <a href="../index.html" class="logo">Secret Sanctuary</a>
 </header>
 
 <!-- ================= CART ================= -->
@@ -22,9 +22,7 @@
 
     <h1>Your Sanctuary Cart</h1>
 
-    <div id="cartItems" class="cart-items">
-      <!-- items injected by JS -->
-    </div>
+    <div id="cartItems" class="cart-items"></div>
 
     <div class="cart-summary">
       <div class="summary-row">
@@ -40,26 +38,24 @@
   </div>
 </section>
 
-<!-- ================= JS ================= -->
 <script>
-/* =========================
-   CART PAGE LOGIC
-========================= */
+/* =====================
+   HELPERS
+===================== */
+function fixImagePath(path) {
+  if (!path) return "";
+  if (typeof path === "object" && path.src) path = path.src;
+  if (typeof path !== "string") return "";
+  return path.startsWith("/") ? `..${path}` : path;
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderCart();
-});
-
-/* =========================
-   GET CART
-========================= */
 function getCart() {
   return JSON.parse(localStorage.getItem("cart")) || [];
 }
 
-/* =========================
+/* =====================
    RENDER CART
-========================= */
+===================== */
 function renderCart() {
   const cart = getCart();
   const container = document.getElementById("cartItems");
@@ -68,7 +64,7 @@ function renderCart() {
   container.innerHTML = "";
 
   if (!cart.length) {
-    container.innerHTML = "<p>Your sanctuary is empty.</p>";
+    container.innerHTML = "<p>Your sanctuary is empty 🌱</p>";
     totalEl.textContent = "₹0";
     return;
   }
@@ -82,10 +78,11 @@ function renderCart() {
     row.className = "cart-item";
 
     row.innerHTML = `
-      <img src="${item.image}" alt="${item.name}">
+      <img src="${fixImagePath(item.image)}" alt="${item.name}">
       <div class="cart-info">
         <h4>${item.name}</h4>
         <span>₹${item.price}</span>
+
         <div class="qty">
           <button data-action="dec" data-index="${index}">−</button>
           <span>${item.qty}</span>
@@ -101,18 +98,16 @@ function renderCart() {
   totalEl.textContent = `₹${total}`;
 }
 
-/* =========================
-   CART ACTIONS
-========================= */
+/* =====================
+   ACTIONS
+===================== */
 document.addEventListener("click", e => {
   const cart = getCart();
 
   if (e.target.dataset.action) {
     const i = e.target.dataset.index;
-
     if (e.target.dataset.action === "inc") cart[i].qty++;
     if (e.target.dataset.action === "dec" && cart[i].qty > 1) cart[i].qty--;
-
     localStorage.setItem("cart", JSON.stringify(cart));
     renderCart();
   }
@@ -124,13 +119,17 @@ document.addEventListener("click", e => {
   }
 });
 
-/* =========================
-   CHECKOUT PLACEHOLDER
-========================= */
+/* =====================
+   CHECKOUT
+===================== */
 document.getElementById("checkoutBtn").addEventListener("click", () => {
-  window.location.href = "/products/checkout.html";
+  window.location.href = "./checkout.html";
 });
 
+/* =====================
+   INIT
+===================== */
+document.addEventListener("DOMContentLoaded", renderCart);
 </script>
 
 </body>
