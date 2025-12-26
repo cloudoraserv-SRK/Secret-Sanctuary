@@ -1,0 +1,74 @@
+body {
+  background: #0f1511;
+  color: #e9f1ea;
+  font-family: Inter, sans-serif;
+}
+
+.admin-header {
+  padding: 24px;
+  border-bottom: 1px solid rgba(143,191,143,0.2);
+}
+
+.admin-layout {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+}
+
+section {
+  border: 1px solid rgba(143,191,143,0.2);
+  padding: 24px;
+}
+
+input, textarea {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid rgba(143,191,143,0.3);
+  color: #e9f1ea;
+}
+
+button {
+  padding: 10px 20px;
+  border: 1px solid #8fbf8f;
+  background: transparent;
+  color: #8fbf8f;
+  cursor: pointer;
+}
+.order-card {
+  border: 1px solid rgba(143,191,143,0.25);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.order-customer {
+  font-size: 0.8rem;
+  color: #b7c4b9;
+  margin-bottom: 12px;
+}
+
+.order-items {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 12px;
+}
+
+.order-items li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}
+
+.order-total {
+  font-weight: bold;
+  text-align: right;
+}

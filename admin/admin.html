@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel | Secret Sanctuary</title>
+
+  <link rel="stylesheet" href="admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header class="admin-header">
+  <h1>Secret Sanctuary — Admin</h1>
+</header>
+
+<main class="admin-layout">
+
+  <!-- ORDERS -->
+  <section>
+    <h2>Orders</h2>
+    <div id="orders"></div>
+  </section>
+
+  <!-- ADD PRODUCT -->
+  <section>
+    <h2>Add Product</h2>
+
+    <input id="pName" placeholder="Name">
+    <input id="pSlug" placeholder="Slug">
+    <input id="pPrice" placeholder="Price">
+    <input id="pImage" placeholder="Image path">
+    <textarea id="pDesc" placeholder="Description"></textarea>
+    <textarea id="pEnergy" placeholder="Energy"></textarea>
+
+    <button id="addProductBtn">Add Product</button>
+  </section>
+
+</main>
+
+<script type="module" src="admin.js"></script>
+
+</body>
+</html>
