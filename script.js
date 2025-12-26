@@ -77,8 +77,8 @@ card.innerHTML = `
 
     card.addEventListener("click", e => {
       if (!e.target.classList.contains("add-btn")) {
-        window.location.href =
-          `/products/product.html?slug=${product.slug}`;
+       window.location.href =
+  `./products/product.html?slug=${product.slug}`;
       }
     });
 
@@ -122,5 +122,6 @@ function updateCartCount() {
   const el = document.getElementById("cartCount");
   if (el) el.textContent = total;
 }
+
 
 
