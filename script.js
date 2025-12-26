@@ -58,18 +58,22 @@ async function loadFeaturedProducts() {
     const card = document.createElement("article");
     card.className = "product-card";
 
-    card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <p>${product.energy || "Balance, shanti aur well-being ke liye sacred plant"}</p>
-      <button class="add-btn"
-        data-id="${product.id}"
-        data-name="${product.name}"
-        data-price="${product.price}"
-        data-image="${product.image}">
-        Add to Sanctuary
-      </button>
-    `;
+    const imagePath = product.image.startsWith("/")
+  ? `.${product.image}`
+  : product.image;
+
+card.innerHTML = `
+  <img src="${imagePath}" alt="${product.name}">
+  <h3>${product.name}</h3>
+  <p>${product.energy || "Balance, shanti aur well-being ke liye sacred plant"}</p>
+  <button class="add-btn"
+    data-id="${product.id}"
+    data-name="${product.name}"
+    data-price="${product.price}"
+    data-image="${imagePath}">
+    Add to Sanctuary
+  </button>
+`;
 
     card.addEventListener("click", e => {
       if (!e.target.classList.contains("add-btn")) {
@@ -118,4 +122,5 @@ function updateCartCount() {
   const el = document.getElementById("cartCount");
   if (el) el.textContent = total;
 }
+
 
