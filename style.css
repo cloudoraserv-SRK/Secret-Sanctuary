@@ -27,7 +27,7 @@ html, body {
       rgba(6,11,8,0.88),
       rgba(6,11,8,0.95)
     ),
-    url("assets/images/sacred-grain.JPG") center / cover fixed no-repeat;
+    url("/assets/images/sacred-grain.JPG") center / cover fixed no-repeat;
   color: var(--text-main);
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
@@ -1042,3 +1042,4 @@ html, body {
   font-size: 12px;
   color: #8f8f8f;
 }
+
