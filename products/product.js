@@ -7,9 +7,17 @@ let currentProduct = null;
 ===================== */
 
 // 🔥 GitHub Pages image path fix
-function fixImagePath(path) {
-  if (!path) return "";
-  return path.startsWith("/") ? `..${path}` : path;
+function fixImagePath(input) {
+  if (!input) return "";
+
+  // agar object hai { src: "..." }
+  if (typeof input === "object" && input.src) {
+    input = input.src;
+  }
+
+  if (typeof input !== "string") return "";
+
+  return input.startsWith("/") ? `..${input}` : input;
 }
 
 function getCart() {
@@ -217,3 +225,4 @@ document.getElementById("whatsappBtn")?.addEventListener("click", () => {
     "_blank"
   );
 });
+
