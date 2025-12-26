@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Secret Sanctuary</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<section class="checkout">
+  <div class="checkout-container">
+
+    <h1>Complete Your Sanctuary Order</h1>
+
+    <!-- ================= ORDER SUMMARY ================= -->
+    <div class="checkout-box">
+      <h3>Order Summary</h3>
+      <div id="orderSummary"></div>
+      <div class="total-row">
+        <span>Total</span>
+        <strong id="orderTotal">₹0</strong>
+      </div>
+    </div>
+
+    <!-- ================= CUSTOMER DETAILS ================= -->
+    <div class="checkout-box">
+      <h3>Your Details</h3>
+
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <textarea id="address" placeholder="Delivery Address" required></textarea>
+    </div>
+
+    <!-- ================= PLACE ORDER ================= -->
+    <button id="placeOrderBtn" class="checkout-btn">
+      Place Order via WhatsApp
+    </button>
+
+  </div>
+</section>
+
+<script>
+/* =========================
+   LOAD CART
+========================= */
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+const summary = document.getElementById("orderSummary");
+const totalEl = document.getElementById("orderTotal");
+
+let total = 0;
+
+cart.forEach(item => {
+  total += item.price * item.qty;
+
+  const row = document.createElement("div");
+  row.className = "summary-item";
+  row.innerHTML = `
+    <span>${item.name} × ${item.qty}</span>
+    <span>₹${item.price * item.qty}</span>
+  `;
+  summary.appendChild(row);
+});
+
+totalEl.textContent = `₹${total}`;
+
+/* =========================
+   PLACE ORDER (WHATSAPP)
+========================= */
+document.getElementById("placeOrderBtn").addEventListener("click", () => {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if (!name || !phone || !address) {
+    alert("Please fill all details");
+    return;
+  }
+
+  let message = `🙏 *New Order – Secret Sanctuary*\n\n`;
+  message += `👤 Name: ${name}\n📞 Phone: ${phone}\n🏠 Address: ${address}\n\n`;
+  message += `🪴 *Order Details:*\n`;
+
+  cart.forEach(item => {
+    message += `• ${item.name} × ${item.qty} = ₹${item.price * item.qty}\n`;
+  });
+
+  message += `\n💰 *Total: ₹${total}*`;
+
+  const whatsappNumber = "919005252278"; // apna number
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+  window.open(url, "_blank");
+});
+</script>
+
+</body>
+</html>

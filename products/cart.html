@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Sanctuary Cart</title>
+
+  <!-- MAIN CSS (same file used everywhere) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <a href="/index.html" class="logo">Secret Sanctuary</a>
+</header>
+
+<!-- ================= CART ================= -->
+<section class="cart">
+  <div class="cart-container">
+
+    <h1>Your Sanctuary Cart</h1>
+
+    <div id="cartItems" class="cart-items">
+      <!-- items injected by JS -->
+    </div>
+
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span>Total</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+
+      <button id="checkoutBtn" class="checkout-btn">
+        Proceed to Checkout
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= JS ================= -->
+<script>
+/* =========================
+   CART PAGE LOGIC
+========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderCart();
+});
+
+/* =========================
+   GET CART
+========================= */
+function getCart() {
+  return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+/* =========================
+   RENDER CART
+========================= */
+function renderCart() {
+  const cart = getCart();
+  const container = document.getElementById("cartItems");
+  const totalEl = document.getElementById("cartTotal");
+
+  container.innerHTML = "";
+
+  if (!cart.length) {
+    container.innerHTML = "<p>Your sanctuary is empty.</p>";
+    totalEl.textContent = "₹0";
+    return;
+  }
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+
+    const row = document.createElement("div");
+    row.className = "cart-item";
+
+    row.innerHTML = `
+      <img src="${item.image}" alt="${item.name}">
+      <div class="cart-info">
+        <h4>${item.name}</h4>
+        <span>₹${item.price}</span>
+        <div class="qty">
+          <button data-action="dec" data-index="${index}">−</button>
+          <span>${item.qty}</span>
+          <button data-action="inc" data-index="${index}">+</button>
+        </div>
+      </div>
+      <button class="remove-btn" data-index="${index}">✕</button>
+    `;
+
+    container.appendChild(row);
+  });
+
+  totalEl.textContent = `₹${total}`;
+}
+
+/* =========================
+   CART ACTIONS
+========================= */
+document.addEventListener("click", e => {
+  const cart = getCart();
+
+  if (e.target.dataset.action) {
+    const i = e.target.dataset.index;
+
+    if (e.target.dataset.action === "inc") cart[i].qty++;
+    if (e.target.dataset.action === "dec" && cart[i].qty > 1) cart[i].qty--;
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  if (e.target.classList.contains("remove-btn")) {
+    cart.splice(e.target.dataset.index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+});
+
+/* =========================
+   CHECKOUT PLACEHOLDER
+========================= */
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+  window.location.href = "/products/checkout.html";
+});
+
+</script>
+
+</body>
+</html>
