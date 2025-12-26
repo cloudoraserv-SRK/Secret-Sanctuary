@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Secret Sanctuary | Nature’s Hidden Power</title>
+  <meta name="description" content="Secret Sanctuary — premium sacred plants and ancient healing wisdom." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:,">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css" />
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+  
+<!-- ================= HERO : INTENTION ================= -->
+<header id="hero" class="hero">
+
+  <!-- Background layers -->
+  <div class="hero-organic"></div>
+  <div class="hero-ambient"></div>
+  <div class="hero-overlay"></div>
+
+  <!-- Header / Nav -->
+  <nav class="nav">
+  <div class="logo">
+    <img src="assets/images/logo.png" alt="Secret Sanctuary">
+    <span>Secret Sanctuary</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#why">Why</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#featured">Products</a></li>
+    <li><a href="products/product.html">Shop</a></li>
+    <li class="cart-item">
+  <a href="products/cart.html" class="cart-link">
+    <img src="assets/images/cart.svg" alt="Cart" class="cart-icon">
+    <span class="cart-count" id="cartCount">0</span>
+  </a>
+</li>
+  </ul>
+</nav>
+
+  <!-- Hero Content -->
+  <div class="hero-content hero-grid">
+
+    <!-- LEFT : Sacred Image -->
+    <div class="hero-left">
+      <div class="hero-image-wrap">
+        <img 
+          src="assets/images/hero.png" 
+          alt="Kuberakshi Sacred Plant"
+          class="hero-image"
+        />
+      </div>
+    </div>
+
+    <!-- RIGHT : Text -->
+    <div class="hero-right">
+      <h1 class="hero-title">Secret Sanctuary</h1>
+
+      <p class="hero-subtitle poetic">
+        Where ancient plants awaken<br>
+        abundance, balance, and quiet strength.
+      </p>
+
+      <p class="hero-description">
+        Carefully preserved sacred plants and healing herbs,
+        chosen for those who seek harmony with nature.
+      </p>
+
+<button class="hero-cta" onclick="location.href='products/product.html'">
+  Enter the Sanctuary
+</button>
+
+  </div>
+</header>
+<!-- ================= END HERO ================= -->
+
+
+<!-- ============ WHY SECRET SANCTUARY ============ -->
+<section id="why" class="why">
+  <div class="why-container">
+
+    <div class="why-header">
+      <span class="why-tag">Why Secret Sanctuary</span>
+      <h2>Sacred by Nature. Pure by Choice.</h2>
+      <p>
+        We don’t sell plants.  
+        We preserve living wisdom.
+      </p>
+    </div>
+
+    <div class="why-grid">
+
+      <div class="why-card">
+        <h3>Rare & Sacred Plants</h3>
+        <p>
+          Hand-selected species revered for centuries — never mass-produced, never ordinary.
+        </p>
+      </div>
+
+      <div class="why-card">
+        <h3>Ancient Wisdom Backed</h3>
+        <p>
+          Rooted in Ayurveda, Vedic science, and time-tested healing traditions.
+        </p>
+      </div>
+
+      <div class="why-card">
+        <h3>Pure & Ethical Sourcing</h3>
+        <p>
+          Naturally grown. No chemicals, no shortcuts, no compromises.
+        </p>
+      </div>
+
+      <div class="why-card">
+        <h3>Handled with Intention</h3>
+        <p>
+          Each plant is treated as sacred energy — not as inventory.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ============ SACRED CATEGORIES ============ -->
+<section id="categories" class="categories">
+  <div class="categories-container">
+
+    <div class="categories-header">
+      <span class="categories-tag">Sacred Categories</span>
+      <h2>Choose the Energy You Seek</h2>
+      <p>
+        Each category represents a purpose —  
+        abundance, healing, and ancient balance.
+      </p>
+    </div>
+
+    <div class="categories-track">
+
+      <article class="category-card">
+        <h3>Wealth & Abundance</h3>
+        <p>Kuberakshi · Jade Plant</p>
+      </article>
+
+      <article class="category-card">
+        <h3>Healing & Strength</h3>
+        <p>Moringa · Arjuna Bark</p>
+      </article>
+
+      <article class="category-card">
+        <h3>Sacred Medicinal Species</h3>
+        <p>Rare · Traditional · Preserved</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+<!-- ============ FEATURED PRODUCTS ============ -->
+<section id="featured" class="featured">
+  <div class="featured-container">
+
+    <div class="featured-header">
+      <span class="featured-tag">Featured Offerings</span>
+      <h2>Sacred Plants jo Life ko Balance me laaye</h2>
+    </div>
+
+    <div id="featuredGrid" class="featured-grid">
+      <!-- Supabase se auto render -->
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ ANCIENT KNOWLEDGE ============ -->
+<section id="knowledge" class="knowledge">
+  <div class="knowledge-wrap">
+
+    <div class="knowledge-text">
+      <span class="knowledge-tag">Ancient Wisdom</span>
+      <h2>Gyaan jo Samay bhi Tod Nahi Paaya</h2>
+      <p>
+        Hazaaron saalon se sacred plants ne insaan ko
+        balance, shakti, protection aur abundance ka raasta dikhaya hai —
+        Ayurveda aur Vedic gyaan par adharit.
+      </p>
+    </div>
+
+    <div class="knowledge-visual">
+      <div class="floating-symbol"></div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ============ RITUAL GUIDE ============ -->
+<section id="ritual" class="ritual">
+  <div class="ritual-container">
+
+    <div class="ritual-header">
+      <span class="ritual-tag">Ritual Guide</span>
+      <h2>A Simple Path. A Sacred Practice.</h2>
+      <p>
+        Rituals are not actions —  
+        they are moments of alignment.
+      </p>
+    </div>
+
+    <div class="ritual-wrap">
+
+      <div class="ritual-step">
+        <span class="step-no">01</span>
+        <h3>Prepare</h3>
+        <p>Create a calm space. Slow your breath. Set your intention.</p>
+      </div>
+
+      <div class="ritual-step">
+        <span class="step-no">02</span>
+        <h3>Use with Awareness</h3>
+        <p>Follow nature’s rhythm. Handle with presence and respect.</p>
+      </div>
+
+      <div class="ritual-step">
+        <span class="step-no">03</span>
+        <h3>Allow Time</h3>
+        <p>Growth, healing, and balance unfold — never forced.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ============ TRUST & PURITY ============ -->
+<section id="trust" class="trust">
+  <div class="trust-container">
+
+    <div class="trust-grid">
+      <div class="trust-item">100% Natural</div>
+      <div class="trust-item">Carefully Prepared</div>
+      <div class="trust-item">Ethically Sourced</div>
+      <div class="trust-item">Handled with Intention</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============ TESTIMONIALS ============ -->
+<section id="testimonials" class="testimonials">
+  <div class="testimonials-container">
+
+    <div class="testimonials-header">
+      <span class="testimonials-tag">Voices</span>
+      <h2>Experiences from the Sanctuary</h2>
+    </div>
+
+    <div class="testimonials-track">
+
+      <article class="testimonial">
+        <p>
+          “There is a calm presence in these plants.  
+          It feels authentic, not commercial.”
+        </p>
+        <span>— R., Bengaluru</span>
+      </article>
+
+      <article class="testimonial">
+        <p>
+          “Packaging, energy, and quality feel  
+          intentionally and thoughtfully done.”
+        </p>
+        <span>— A., Pune</span>
+      </article>
+
+      <article class="testimonial">
+        <p>
+          “Simple, pure, and deeply aligned  
+          with nature.”
+        </p>
+        <span>— S., Dehradun</span>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ GENIE ============ -->
+<div id="genieToggle" class="genie-toggle">Genie</div>
+<div id="geniePanel" class="genie-panel">
+  <p>I can help you choose what aligns with you.</p>
+</div>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="final-cta" class="final-cta">
+  <div class="final-cta-wrap">
+
+    <span class="cta-tag">Begin Your Journey</span>
+    <h2>Enter the Sanctuary</h2>
+
+    <p>
+      This is more than a purchase.  
+      It is a return to balance, intention, and living wisdom.
+    </p>
+
+    <a href="#featured" class="cta-btn">
+      Begin Your Sanctuary
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-brand">
+      <h3>Secret Sanctuary</h3>
+      <p>Preserving nature’s sacred wisdom.</p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Policies</a>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 Secret Sanctuary</span>
+    </div>
+
+  </div>
+</footer>
+<script type="module" src="script.js"></script>
+
+</body>
+</html>
