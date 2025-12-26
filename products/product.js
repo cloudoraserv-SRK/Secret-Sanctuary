@@ -2,32 +2,43 @@ import { supabase } from "../admin/supabaseClient.js";
 
 let currentProduct = null;
 
+/* =====================
+   HELPERS
+===================== */
+
+// 🔥 GitHub Pages image path fix
+function fixImagePath(path) {
+  if (!path) return "";
+  return path.startsWith("/") ? `..${path}` : path;
+}
+
+function getCart() {
+  return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+function updateCartCount() {
+  const el = document.getElementById("cartCount");
+  if (!el) return;
+
+  const cart = getCart();
+  const total = cart.reduce((s, i) => s + (i.qty || 1), 0);
+  el.textContent = total;
+}
+
+/* =====================
+   DOM READY
+===================== */
 document.addEventListener("DOMContentLoaded", async () => {
 
   /* =====================
-     GET SLUG (fallback)
-  ====================== */
+     GET SLUG
+  ===================== */
   const slug =
     new URLSearchParams(window.location.search).get("slug") || "kuberakshi";
 
   /* =====================
-     DOM ELEMENTS
-  ====================== */
-  const pageTitle = document.getElementById("pageTitle");
-  const productName = document.getElementById("productName");
-  const productEnergy = document.getElementById("productEnergy");
-  const productDesc = document.getElementById("productDesc");
-  const productPrice = document.getElementById("productPrice");
-
-  const galleryMain = document.querySelector(".gallery-main");
-  const thumbs = document.getElementById("thumbs");
-
-  const addBtn = document.getElementById("addToCartBtn");
-  const cartCount = document.getElementById("cartCount");
-
-  /* =====================
      FETCH PRODUCT
-  ====================== */
+  ===================== */
   const { data: product, error } = await supabase
     .from("products")
     .select("*")
@@ -44,69 +55,69 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   /* =====================
      BASIC INFO
-  ====================== */
-  pageTitle.innerText = `${product.name} | Secret Sanctuary`;
-  productName.innerText = product.name;
-  productEnergy.innerText = product.energy || "";
-  productDesc.innerText = product.description;
-  productPrice.innerText = `₹${product.price}`;
+  ===================== */
+  document.title = `${product.name} | Secret Sanctuary`;
+
+  document.getElementById("productName").textContent = product.name;
+  document.getElementById("productEnergy").textContent = product.energy || "";
+  document.getElementById("productDesc").textContent = product.description || "";
+  document.getElementById("productPrice").textContent = `₹${product.price}`;
 
   /* =====================
      GALLERY
-  ====================== */
+  ===================== */
   renderGallery(product);
 
   /* =====================
      CART
-  ====================== */
+  ===================== */
   setupCart(product);
-
   updateCartCount();
 
   /* =====================
      RELATED PRODUCTS
-  ====================== */
+  ===================== */
   loadRelatedProducts(product.slug);
 });
 
 /* =====================
-   GALLERY FUNCTIONS
-====================== */
+   GALLERY
+===================== */
 function renderGallery(product) {
   const galleryMain = document.querySelector(".gallery-main");
   const thumbs = document.getElementById("thumbs");
 
-  thumbs.innerHTML = "";
-  galleryMain.innerHTML = "";
+  if (!galleryMain || !thumbs) return;
 
-  let galleryItems = [];
+  galleryMain.innerHTML = "";
+  thumbs.innerHTML = "";
+
+  let images = [];
 
   if (Array.isArray(product.gallery) && product.gallery.length) {
-    galleryItems = product.gallery.map(item =>
-      typeof item === "string" ? { type: "image", src: item } : item
-    );
+    images = product.gallery;
   } else if (product.image) {
-    galleryItems = [{ type: "image", src: product.image }];
+    images = [product.image];
   }
 
-  if (!galleryItems.length) return;
+  if (!images.length) return;
 
-  setMainImage(galleryItems[0].src, product.name);
+  setMainImage(images[0], product.name);
 
-  galleryItems.forEach((item, index) => {
-    if (item.type !== "image") return;
-
+  images.forEach((src, index) => {
     const thumb = document.createElement("img");
-    thumb.src = item.src;
+    thumb.src = fixImagePath(src);
+    thumb.alt = product.name;
+
     if (index === 0) thumb.classList.add("active");
 
     thumb.addEventListener("click", () => {
       document
-        .querySelectorAll(".gallery-thumbs img")
-        .forEach(el => el.classList.remove("active"));
+        .querySelectorAll("#thumbs img")
+        .forEach(img => img.classList.remove("active"));
 
       thumb.classList.add("active");
-      setMainImage(item.src, product.name);
+      setMainImage(src, product.name);
     });
 
     thumbs.appendChild(thumb);
@@ -115,30 +126,22 @@ function renderGallery(product) {
 
 function setMainImage(src, alt) {
   const galleryMain = document.querySelector(".gallery-main");
+  if (!galleryMain) return;
+
   galleryMain.innerHTML = "";
 
   const img = document.createElement("img");
-  img.src = src;
+  img.src = fixImagePath(src);
   img.alt = alt;
 
   galleryMain.appendChild(img);
 }
 
 /* =====================
-   CART FUNCTIONS
-====================== */
-function getCart() {
-  return JSON.parse(localStorage.getItem("cart")) || [];
-}
-
-function updateCartCount() {
-  const cartCount = document.getElementById("cartCount");
-  if (cartCount) cartCount.innerText = getCart().length;
-}
-
+   CART
+===================== */
 function setupCart(product) {
   const addBtn = document.getElementById("addToCartBtn");
-
   if (!addBtn) return;
 
   addBtn.addEventListener("click", () => {
@@ -153,21 +156,23 @@ function setupCart(product) {
         slug: product.slug,
         name: product.name,
         price: product.price,
-        image: product.image,
+        image: fixImagePath(product.image),
         qty: 1
       });
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    addBtn.innerText = "Added ✓";
+
+    addBtn.textContent = "Added ✓";
     addBtn.disabled = true;
+
     updateCartCount();
   });
 }
 
 /* =====================
    RELATED PRODUCTS
-====================== */
+===================== */
 async function loadRelatedProducts(currentSlug) {
   const { data, error } = await supabase
     .from("products")
@@ -185,11 +190,13 @@ async function loadRelatedProducts(currentSlug) {
 
   data.forEach(p => {
     const card = document.createElement("a");
-    card.href = `/products/product.html?slug=${p.slug}`;
     card.className = "related-card";
+    card.href = `./product.html?slug=${p.slug}`;
+
+    const imgPath = fixImagePath(p.image);
 
     card.innerHTML = `
-      <img src="${p.image}" alt="${p.name}">
+      <img src="${imgPath}" alt="${p.name}">
       <h4>${p.name}</h4>
       <span>₹${p.price}</span>
     `;
@@ -200,11 +207,13 @@ async function loadRelatedProducts(currentSlug) {
 
 /* =====================
    WHATSAPP BUTTON
-====================== */
+===================== */
 document.getElementById("whatsappBtn")?.addEventListener("click", () => {
   const phone = "919005252278";
   const msg =
     "Namaste 🙏 Main Secret Sanctuary ke product ke baare me jaankari chahta/chahti hoon.";
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
+  window.open(
+    `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,
+    "_blank"
+  );
 });
