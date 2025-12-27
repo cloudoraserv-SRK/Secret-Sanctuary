@@ -7,22 +7,25 @@
   <title>Secret Sanctuary | Nature’s Hidden Power</title>
   <meta name="description" content="Secret Sanctuary — premium sacred plants and ancient healing wisdom." />
 
-  <!-- Fonts -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-<link rel="icon" href="data:,">
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/images/favicon.png">
 
   <!-- Main CSS -->
   <link rel="stylesheet" href="style.css" />
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" defer></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js" defer></script>
 </head>
 
 <body>
-  
-<!-- ================= HERO : INTENTION ================= -->
+
+<!-- ================= HERO ================= -->
 <header id="hero" class="hero">
 
   <!-- Background layers -->
@@ -30,28 +33,31 @@
   <div class="hero-ambient"></div>
   <div class="hero-overlay"></div>
 
-  <!-- Header / Nav -->
+  <!-- Navigation -->
   <nav class="nav">
-  <div class="logo">
-    <img src="../assets/images/logo.png" alt="Secret Sanctuary">
-    <span>Secret Sanctuary</span>
-  </div>
+    <div class="logo">
+      <img src="../assets/images/logo.png" alt="Secret Sanctuary logo">
+      <span>Secret Sanctuary</span>
+    </div>
 
-  <ul class="nav-links">
-    <li><a href="#related">Other Products</a></li>
-    <li><a href="#support">Whtaspp</a></li>
-    <li><a href="#footer">Contact us</a></li>
-    <li><a href="products/product.html">Shop</a></li>
-    <li class="cart-item">
-  <a href="products/cart.html" class="cart-link">
-    <img src="../assets/images/cart.svg" alt="Cart" class="cart-icon">
-    <span class="cart-count" id="cartCount">0</span>
-  </a>
-</li>
-  </ul>
-</nav>
+    <ul class="nav-links">
+      <li><a href="#related">Other Products</a></li>
+      <li><a href="#support">WhatsApp</a></li>
+      <li><a href="#footer">Contact Us</a></li>
+      <li><a href="products/product.html">Shop</a></li>
 
-<!-- ================= PRODUCT HERO ================= -->
+      <li class="cart-item">
+        <a href="products/cart.html" class="cart-link">
+          <img src="../assets/images/cart.svg" alt="Shopping cart" class="cart-icon">
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+</header>
+
+<!-- ================= PRODUCT PAGE ================= -->
 <main class="product-page">
 
   <!-- LEFT : GALLERY -->
@@ -86,7 +92,7 @@
 <section id="related" class="related-section">
   <h2>You may also like</h2>
   <div id="relatedGrid" class="related-grid">
-    <!-- JS se auto fill -->
+    <!-- Filled by JS -->
   </div>
 </section>
 
@@ -101,15 +107,13 @@
 </section>
 
 <!-- ================= FOOTER ================= -->
-<footer class="footer">
+<footer id="footer" class="footer">
   <div class="footer-inner">
     <h3>Secret Sanctuary</h3>
-    <p>
-      Sacred plants • Ancient wisdom • Conscious living  
-    </p>
+    <p>Sacred plants • Ancient wisdom • Conscious living</p>
 
     <div class="footer-links">
-      <a href="/index.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="#">About</a>
       <a href="#">Policies</a>
       <a href="#support">Support</a>
@@ -119,11 +123,8 @@
   </div>
 </footer>
 
+<!-- Product Logic -->
 <script type="module" src="product.js"></script>
 
 </body>
 </html>
-
-
-
-
