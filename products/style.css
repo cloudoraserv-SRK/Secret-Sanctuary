@@ -1,81 +1,203 @@
+
 /* =========================
-   CORE THEME
+   SECRET SANCTUARY – CORE
 ========================= */
 
 :root {
-  --bg-dark: #060b08;
-  --glass: rgba(10,15,12,0.6);
+  --bg-dark: #101712;
+  --bg-deep: #0b120e;
 
   --accent: #8fbf8f;
-  --gold: #bfa76a;
 
   --text-main: #e9f1ea;
   --text-muted: #b7c4b9;
 }
 
-body {
-  background: var(--bg-dark);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(
+      rgba(6,11,8,0.88),
+      rgba(6,11,8,0.95)
+    ),
+    url("./assets/images/sacred-grain.jpg") center / cover fixed no-repeat;
   color: var(--text-main);
   font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(16,23,18,0.55), rgba(11,18,14,0.75)),
+    url("assets/hero-bg.webp") center / cover no-repeat;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+/* ----- HERO LAYERS ----- */
+
+.hero-organic {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(143,191,143,0.12), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(143,191,143,0.10), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(143,191,143,0.08), transparent 50%);
+  animation: organicMove 20s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+.hero-ambient {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(143,191,143,0.25) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.14;
+  animation: dustMove 60s linear infinite;
+  z-index: 2;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.04), rgba(0,0,0,0.9));
+  z-index: 3;
+}
+
+@keyframes organicMove {
+  from { transform: scale(1) translate(0,0); }
+  to   { transform: scale(1.05) translate(-10px,10px); }
+}
+
+@keyframes dustMove {
+  from { background-position: 0 0; }
+  to   { background-position: 1000px 1000px; }
 }
 
 /* =========================
-   HEADER
+   NAV
 ========================= */
 
-.site-header {
-  position: sticky;
+/* =========================
+   HEADER / NAVIGATION
+========================= */
+
+.nav {
+  position: fixed;
   top: 0;
-  z-index: 100;
-  background: rgba(6,11,8,0.78);
-  backdrop-filter: blur(14px);
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  padding: 20px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(16,23,18,0.65);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(143,191,143,0.15);
 }
 
-.header-container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 14px 20px;
+.logo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-/* =========================
-   LOGO FIX (IMPORTANT)
-========================= */
-
-.logo-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-img {
-  height: 32px;        /* 👈 CONTROLLED SIZE */
-  width: auto;
-  max-height: 32px;
-  object-fit: contain;
-}
-
-.logo-text {
+  gap: 12px;
   font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   letter-spacing: 1px;
-  line-height: 1;
 }
 
-.main-nav a {
-  margin-left: 26px;
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
+.logo img {
+  height: 34px;
+  width: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-muted);
-  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-.main-nav a:hover {
+/* underline animation */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
   color: var(--text-main);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+.cart-item {
+  position: relative;
+}
+
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #d4af37; /* gold */
+  color: #000;
+  font-size: 11px;
+  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* =========================
@@ -767,3 +889,4 @@ body {
     padding: 22px;
   }
 }
+
