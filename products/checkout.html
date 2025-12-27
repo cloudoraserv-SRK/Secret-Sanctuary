@@ -4,25 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Secret Sanctuary | Nature’s Hidden Power</title>
-  <meta name="description" content="Secret Sanctuary — premium sacred plants and ancient healing wisdom." />
+  <title>Checkout | Secret Sanctuary</title>
+  <meta name="description" content="Complete your Secret Sanctuary order via WhatsApp." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-<link rel="icon" href="data:,">
+  <!-- Favicon (optional) -->
+  <link rel="icon" href="data:,">
 
   <!-- Main CSS -->
   <link rel="stylesheet" href="style.css" />
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <!-- GSAP (if used globally) -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js" defer></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js" defer></script>
 </head>
 
 <body>
-  
-<!-- ================= HERO : INTENTION ================= -->
+
+<!-- ================= HERO ================= -->
 <header id="hero" class="hero">
 
   <!-- Background layers -->
@@ -30,15 +33,18 @@
   <div class="hero-ambient"></div>
   <div class="hero-overlay"></div>
 
-  <!-- Header / Nav -->
+  <!-- Navigation -->
   <nav class="nav">
-  <div class="logo">
-    <img src="assets/images/logo.png" alt="Secret Sanctuary">
-    <span>Secret Sanctuary</span>
-  </div>
-</nav>
+    <div class="logo">
+      <img src="assets/images/logo.png" alt="Secret Sanctuary logo">
+      <span>Secret Sanctuary</span>
+    </div>
+  </nav>
 
-<section class="checkout">
+</header>
+
+<!-- ================= CHECKOUT ================= -->
+<main class="checkout">
   <div class="checkout-container">
 
     <h1>Complete Your Sanctuary Order</h1>
@@ -46,7 +52,9 @@
     <!-- ================= ORDER SUMMARY ================= -->
     <div class="checkout-box">
       <h3>Order Summary</h3>
-      <div id="orderSummary"></div>
+
+      <div id="orderSummary" class="order-summary"></div>
+
       <div class="total-row">
         <span>Total</span>
         <strong id="orderTotal">₹0</strong>
@@ -68,8 +76,9 @@
     </button>
 
   </div>
-</section>
+</main>
 
+<!-- ================= CHECKOUT SCRIPT ================= -->
 <script>
 /* =========================
    LOAD CART
@@ -80,17 +89,21 @@ const totalEl = document.getElementById("orderTotal");
 
 let total = 0;
 
-cart.forEach(item => {
-  total += item.price * item.qty;
+if (cart.length === 0) {
+  summary.innerHTML = "<p>Your cart is empty 🌿</p>";
+} else {
+  cart.forEach(item => {
+    total += item.price * item.qty;
 
-  const row = document.createElement("div");
-  row.className = "summary-item";
-  row.innerHTML = `
-    <span>${item.name} × ${item.qty}</span>
-    <span>₹${item.price * item.qty}</span>
-  `;
-  summary.appendChild(row);
-});
+    const row = document.createElement("div");
+    row.className = "summary-item";
+    row.innerHTML = `
+      <span>${item.name} × ${item.qty}</span>
+      <span>₹${item.price * item.qty}</span>
+    `;
+    summary.appendChild(row);
+  });
+}
 
 totalEl.textContent = `₹${total}`;
 
@@ -98,6 +111,11 @@ totalEl.textContent = `₹${total}`;
    PLACE ORDER (WHATSAPP)
 ========================= */
 document.getElementById("placeOrderBtn").addEventListener("click", () => {
+  if (cart.length === 0) {
+    alert("Your cart is empty");
+    return;
+  }
+
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const address = document.getElementById("address").value.trim();
@@ -108,7 +126,9 @@ document.getElementById("placeOrderBtn").addEventListener("click", () => {
   }
 
   let message = `🙏 *New Order – Secret Sanctuary*\n\n`;
-  message += `👤 Name: ${name}\n📞 Phone: ${phone}\n🏠 Address: ${address}\n\n`;
+  message += `👤 Name: ${name}\n`;
+  message += `📞 Phone: ${phone}\n`;
+  message += `🏠 Address: ${address}\n\n`;
   message += `🪴 *Order Details:*\n`;
 
   cart.forEach(item => {
@@ -117,13 +137,12 @@ document.getElementById("placeOrderBtn").addEventListener("click", () => {
 
   message += `\n💰 *Total: ₹${total}*`;
 
-  const whatsappNumber = "919005252278"; // apna number
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const whatsappNumber = "919005252278"; // your WhatsApp number
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
-  window.open(url, "_blank");
+  window.open(whatsappURL, "_blank");
 });
 </script>
 
 </body>
 </html>
-
