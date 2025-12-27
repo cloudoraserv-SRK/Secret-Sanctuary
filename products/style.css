@@ -591,25 +591,6 @@ html, body {
   gap: 20px;
 }
 
-.cart-item {
-  display: grid;
-  grid-template-columns: 90px 1fr auto;
-  gap: 20px;
-  padding: 18px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(191, 167, 106, 0.15);
-  align-items: center;
-}
-
-.cart-item img {
-  width: 90px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 10px;
-  background: #111;
-}
-
 /* =========================
    CART INFO
 ========================= */
@@ -889,4 +870,5 @@ html, body {
     padding: 22px;
   }
 }
+
 
