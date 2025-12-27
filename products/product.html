@@ -3,35 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title id="pageTitle">Product | Secret Sanctuary</title>
 
-  <meta name="description" content="Sacred plants and ancient healing wisdom from Secret Sanctuary.">
+  <title>Secret Sanctuary | Nature’s Hidden Power</title>
+  <meta name="description" content="Secret Sanctuary — premium sacred plants and ancient healing wisdom." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:,">
+
+  <!-- Main CSS -->
   <link rel="stylesheet" href="style.css" />
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
+  
+<!-- ================= HERO : INTENTION ================= -->
+<header id="hero" class="hero">
 
-<!-- ================= HEADER ================= -->
-<header class="site-header">
-  <div class="header-container">
+  <!-- Background layers -->
+  <div class="hero-organic"></div>
+  <div class="hero-ambient"></div>
+  <div class="hero-overlay"></div>
 
-    <a href="/index.html" class="logo-wrap">
-      <img src="../assets/images/logo.png" class="logo-img" alt="Secret Sanctuary">
-      <span class="logo-text">Secret Sanctuary</span>
-    </a>
-
-    <nav class="main-nav">
-      <a href="/index.html">Home</a>
-      <a href="#related">Explore</a>
-      <a href="#support">Support</a>
-    </nav>
-
-    <a href="./cart.html" class="cart-link">
-      🛒 <span id="cartCount">0</span>
-    </a>
-
+  <!-- Header / Nav -->
+  <nav class="nav">
+  <div class="logo">
+    <img src="assets/images/logo.png" alt="Secret Sanctuary">
+    <span>Secret Sanctuary</span>
   </div>
-</header>
+
+  <ul class="nav-links">
+    <li><a href="#related">Other Products</a></li>
+    <li><a href="#support">Whtaspp</a></li>
+    <li><a href="#footer">Contact us</a></li>
+    <li><a href="products/product.html">Shop</a></li>
+    <li class="cart-item">
+  <a href="products/cart.html" class="cart-link">
+    <img src="assets/images/cart.svg" alt="Cart" class="cart-icon">
+    <span class="cart-count" id="cartCount">0</span>
+  </a>
+</li>
+  </ul>
+</nav>
 
 <!-- ================= PRODUCT HERO ================= -->
 <main class="product-page">
@@ -105,5 +123,6 @@
 
 </body>
 </html>
+
 
 
