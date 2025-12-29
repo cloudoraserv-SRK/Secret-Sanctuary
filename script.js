@@ -38,7 +38,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     fadeUp(".knowledge-text, .knowledge-visual", "#knowledge");
   }
+/* =========================
+   Hamburger
+========================= */
+const toggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('.nav-links');
 
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('active');
+  nav.classList.toggle('active');
+  toggle.setAttribute(
+    'aria-expanded',
+    toggle.classList.contains('active')
+  );
+});
+/* =========================
+   Ribbon-Floating
+========================= */
+const ribbon = document.querySelector('.floating-ribbon');
+const closeBtn = document.querySelector('.ribbon-close');
+
+if (localStorage.getItem('ribbonClosed')) {
+  ribbon.style.display = 'none';
+}
+
+closeBtn.addEventListener('click', () => {
+  ribbon.style.display = 'none';
+  localStorage.setItem('ribbonClosed', 'true');
+});
   /* =========================
      LOAD PRODUCTS THEN ANIMATE
   ========================= */
@@ -147,4 +174,35 @@ function updateCartCount() {
 
   const el = document.getElementById("cartCount");
   if (el) el.textContent = total;
+}
+/* =========================
+   SUbmit Form
+========================= */
+const enquiryForm = document.getElementById("enquiryForm");
+
+if (enquiryForm) {
+  enquiryForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(enquiryForm);
+
+    const { error } = await supabase
+      .from("enquiries")
+      .insert([{
+        name: formData.get("name"),
+        email: formData.get("email"),
+        city: formData.get("city"),
+        phone: formData.get("phone"),
+        enquiry_type: formData.get("enquiry_type")
+      }]);
+
+    if (error) {
+      console.error("❌ Enquiry failed", error);
+      alert("Something went wrong. Please try again.");
+      return;
+    }
+
+    alert("🌿 Thank you! Your enquiry has been received.");
+    enquiryForm.reset();
+  });
 }
