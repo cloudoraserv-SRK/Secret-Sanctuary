@@ -52,6 +52,18 @@ toggle.addEventListener('click', () => {
     toggle.classList.contains('active')
   );
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".hamburger");
+  const mobileMenu = document.querySelector(".mobile-menu");
+
+  if (!hamburger || !mobileMenu) return;
+
+  hamburger.addEventListener("click", () => {
+    mobileMenu.classList.toggle("active");
+    hamburger.classList.toggle("open");
+  });
+});
+
 /* =========================
    Ribbon-Floating
 ========================= */
