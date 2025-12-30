@@ -15,8 +15,8 @@
 <link rel="icon" href="data:,">
 
   <!-- Main CSS -->
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./product.css" />
+    <link rel="stylesheet" href="./cart.css" />
 <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 </head>
@@ -54,10 +54,10 @@
     <li><a href="#why">Why</a></li>
     <li><a href="#categories">Categories</a></li>
     <li><a href="#featured">Products</a></li>
-    <li><a href="../index.html">Shop</a></li>
+    <li><a href="products/product.html">Shop</a></li>
 
     <li class="cart-item">
-      <a href="./cart.html" class="cart-link">
+      <a href="../products/cart.html" class="cart-link">
         <img src="../assets/images/cart.svg" alt="Cart" class="cart-icon">
         <span class="cart-count" id="cartCount">0</span>
       </a>
@@ -65,34 +65,49 @@
   </ul>
 
 </nav>
-</header>
+
 
   <div class="floating-ribbon">
   🌿 Bulk orders & partnerships open — <a href="#footer">Enquire Now</a>
   <span class="ribbon-close">✕</span>
 </div>
 
-<!-- ================= CART ================= -->
-<section class="cart">
-  <div class="cart-container">
 
-    <h1>Your Sanctuary Cart</h1>
+<!-- ================= CHECKOUT ================= -->
+<main class="checkout">
+  <div class="checkout-container">
 
-    <div id="cartItems" class="cart-items"></div>
+    <h1>Complete Your Sanctuary Order</h1>
 
-    <div class="cart-summary">
-      <div class="summary-row">
+    <!-- ================= ORDER SUMMARY ================= -->
+    <div class="checkout-box">
+      <h3>Order Summary</h3>
+
+      <div id="orderSummary" class="order-summary"></div>
+
+      <div class="total-row">
         <span>Total</span>
-        <strong id="cartTotal">₹0</strong>
+        <strong id="orderTotal">₹0</strong>
       </div>
-
-      <button id="checkoutBtn" class="checkout-btn">
-        Proceed to Checkout
-      </button>
     </div>
 
+    <!-- ================= CUSTOMER DETAILS ================= -->
+    <div class="checkout-box">
+      <h3>Your Details</h3>
+
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <textarea id="address" placeholder="Delivery Address" required></textarea>
+    </div>
+
+    <!-- ================= PLACE ORDER ================= -->
+    <button id="placeOrderBtn">
+  <span>📩</span> Place Order via WhatsApp
+</button>
+
+
   </div>
-</section>
+</main>
 
 <!-- ============ GENIE ============ -->
 <div id="genieToggle" class="genie-toggle">Genie</div>
@@ -112,7 +127,7 @@
       It is a return to balance, intention, and living wisdom.
     </p>
 
-    <a href="../index.html#featured" class="cta-btn">
+    <a href="#featured" class="cta-btn">
       Begin Your Sanctuary
     </a>
 
@@ -213,104 +228,76 @@
   💬
 </a>
 <footer class="footer" data-component="footer">
+
 <script>
-/* =====================
-   HELPERS
-===================== */
-function fixImagePath(path) {
-  if (!path) return "";
-  if (typeof path === "object" && path.src) path = path.src;
-  if (typeof path !== "string") return "";
-  return path.startsWith("/") ? `..${path}` : path;
-}
+/* =========================
+   LOAD CART
+========================= */
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+const summary = document.getElementById("orderSummary");
+const totalEl = document.getElementById("orderTotal");
 
-function getCart() {
-  return JSON.parse(localStorage.getItem("cart")) || [];
-}
+let total = 0;
 
-/* =====================
-   RENDER CART
-===================== */
-function renderCart() {
-  const cart = getCart();
-  const container = document.getElementById("cartItems");
-  const totalEl = document.getElementById("cartTotal");
-
-  container.innerHTML = "";
-
-  if (!cart.length) {
-    container.innerHTML = "<p>Your sanctuary is empty 🌱</p>";
-    totalEl.textContent = "₹0";
-    return;
-  }
-
-  let total = 0;
-
-  cart.forEach((item, index) => {
+if (cart.length === 0) {
+  summary.innerHTML = "<p>Your cart is empty 🌿</p>";
+} else {
+  cart.forEach(item => {
     total += item.price * item.qty;
 
     const row = document.createElement("div");
-    row.className = "cart-item";
-
+    row.className = "summary-item";
     row.innerHTML = `
-      <img src="${fixImagePath(item.image)}" alt="${item.name}">
-      <div class="cart-info">
-        <h4>${item.name}</h4>
-        <span>₹${item.price}</span>
-
-        <div class="qty">
-          <button data-action="dec" data-index="${index}">−</button>
-          <span>${item.qty}</span>
-          <button data-action="inc" data-index="${index}">+</button>
-        </div>
-      </div>
-      <button class="remove-btn" data-index="${index}">✕</button>
+      <span>${item.name} × ${item.qty}</span>
+      <span>₹${item.price * item.qty}</span>
     `;
-
-    container.appendChild(row);
+    summary.appendChild(row);
   });
-
-  totalEl.textContent = `₹${total}`;
 }
 
-/* =====================
-   ACTIONS
-===================== */
-document.addEventListener("click", e => {
-  const cart = getCart();
+totalEl.textContent = `₹${total}`;
 
-  if (e.target.dataset.action) {
-    const i = e.target.dataset.index;
-    if (e.target.dataset.action === "inc") cart[i].qty++;
-    if (e.target.dataset.action === "dec" && cart[i].qty > 1) cart[i].qty--;
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCart();
+/* =========================
+   PLACE ORDER (WHATSAPP)
+========================= */
+document.getElementById("placeOrderBtn").addEventListener("click", () => {
+  if (cart.length === 0) {
+    alert("Your cart is empty");
+    return;
   }
 
-  if (e.target.classList.contains("remove-btn")) {
-    cart.splice(e.target.dataset.index, 1);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCart();
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if (!name || !phone || !address) {
+    alert("Please fill all details");
+    return;
   }
-});
 
-/* =====================
-   CHECKOUT
-===================== */
-document.getElementById("checkoutBtn").addEventListener("click", () => {
-  window.location.href = "./checkout.html";
-});
+  let message = `🙏 *New Order – Secret Sanctuary*\n\n`;
+  message += `👤 Name: ${name}\n`;
+  message += `📞 Phone: ${phone}\n`;
+  message += `🏠 Address: ${address}\n\n`;
+  message += `🪴 *Order Details:*\n`;
 
-/* =====================
-   INIT
-===================== */
-document.addEventListener("DOMContentLoaded", renderCart);
+  cart.forEach(item => {
+    message += `• ${item.name} × ${item.qty} = ₹${item.price * item.qty}\n`;
+  });
+
+  message += `\n💰 *Total: ₹${total}*`;
+
+  const whatsappNumber = "919005252278"; // your WhatsApp number
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+  window.open(whatsappURL, "_blank");
+});
 </script>
 
 
 <script type="module" src="../script.js"></script>
+<script type="module" src="./product.js"></script>
 
 </body>
 </html>
-
 
